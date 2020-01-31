@@ -22,15 +22,28 @@ func main() {
 	}
 
 	lsd := proto.NewLSDClient(conn)
-
-	res, err := lsd.GenerateNewKeyPair(context.Background(), &proto.NewKeyPairPayload{
-		UserID: "bregydoc",
+	//
+	// res, err := lsd.GenerateNewKeyPair(context.Background(), &proto.NewKeyPairPayload{
+	// 	UserID: "bregydoc",
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	//
+	// log.Info("userID: ", res.UserID)
+	// log.Info("publicKey: ", string(res.PublicKey))
+	res, err := lsd.SendNotification(context.Background(), &proto.NotificationPayload{
+		To:                   []string{"bregydoc"},
+		Notification:         &proto.Notification{
+			Title:                "Hello World",
+			Body:                 "It's a lsd notification!",
+			Options:              []string{"Yeah!", "Ok"},
+		},
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Info("userID: ", res.UserID)
-	log.Info("publicKey: ", string(res.PublicKey))
+	log.Info("NotificationID: ", res.Notifications)
+	log.Info("Ok: ", res.Ok)
 }
-

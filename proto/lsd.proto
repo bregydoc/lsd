@@ -14,7 +14,8 @@ message NotificationPayload {
 
 message NotificationResult {
     bool ok = 1;
-    string notificationID = 2;
+    map<string, string> notifications = 2;
+    // string notificationID = 2;
 }
 
 message Notification  {

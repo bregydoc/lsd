@@ -1,7 +1,6 @@
 package lsd
 
 import (
-	"bytes"
 	"encoding/base64"
 	"net/url"
 	"sync"
@@ -17,14 +16,12 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 	m := melody.New()
 	lock := new(sync.Mutex)
 
-
 	if lsd.sessionsMap == nil {
 		lsd.sessionsMap = map[string]*melody.Session{}
 	}
 
 	log.Info("registering lsd router for ws")
 	r.GET("/ws", func(c *gin.Context) {
-		log.Info("/ws ", c.Request.Host)
 		if err := m.HandleRequest(c.Writer, c.Request); err != nil {
 			panic(err)
 		}
@@ -34,27 +31,34 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 		log.Info("connecting... ", s.Request.Host)
 		lock.Lock()
 
-		log.Info(s.Request.RequestURI)
-		values, err := url.ParseQuery(s.Request.RequestURI)
+		uri, err := url.Parse(s.Request.RequestURI)
 		if err != nil {
 			log.Error(err)
 			return
 		}
-		// protocolHeader := s.Request.Header.Get("Sec-WebSocket-Protocol")
-		userIDFromQuery := values.Get("userID")
-		publicKeyFromQuery := values.Get("publicKey")
 
-		log.Info(userIDFromQuery, publicKeyFromQuery)
-		// chunks :=  strings.Split(protocolHeader, ",")
+		values := uri.Query()
 
-		userID := userIDFromQuery
-		publicKey := publicKeyFromQuery
-		//
-		// if len(chunks) > 1 {
-		// 	publicKey = chunks[1]
-		// }
+		userID := values.Get("userID")
+		publicKey := values.Get("publicKey")
 
-		log.Info("userID, publicKey ", userID, publicKey)
+
+		u64, err := base64.StdEncoding.DecodeString(userID)
+		if err != nil {
+			log.Error(err)
+			return
+		}
+
+		p64, err := base64.StdEncoding.DecodeString(publicKey)
+		if err != nil {
+			log.Error(err)
+			return
+		}
+
+		userID = string(u64)
+		publicKey = string(p64)
+
+		log.Info("userID: ", userID)
 
 		isMono := publicKey == ""
 
@@ -68,30 +72,11 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 			// The session id of a user is the same id, in this case
 			if err := lsd.registerUserSession(userID, userID); err != nil {
 				log.Error(err)
-				return  // TODO: Send an error message
+				return // TODO: Send an error message
 			}
 		} else {
-			private, err := lsd.getPrivateKey(userID)
-			log.Info("private key x: ", string(private))
-			if err != nil {
+			if err := lsd.ifPublicKeyMatchWithUserID(userID, p64); err != nil {
 				log.Error(err)
-				return
-			}
-
-			public, err := lsd.publicKeyBytesFromPrivateKeyBytes(private)
-			if err != nil {
-				log.Error(err)
-				return
-			}
-
-			requestPublicKey, err := base64.StdEncoding.DecodeString(publicKey)
-			if err != nil {
-				log.Error(err)
-				return
-			}
-
-			if !bytes.Equal(public, requestPublicKey) {
-				log.Error("invalid public key, it isn't equal to our saved key")
 				return
 			}
 
@@ -99,7 +84,7 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 			// The session id of a user is the same id, in this case
 			if err := lsd.registerUserSession(userID, userID); err != nil {
 				log.Error(err)
-				return  // TODO: Send an error message
+				return // TODO: Send an error message
 			}
 		}
 		if err := s.Write([]byte("PONG")); err != nil {

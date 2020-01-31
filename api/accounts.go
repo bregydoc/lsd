@@ -1,6 +1,5 @@
 package api
 
-
 func (api *API) registerNewAdminAccount(username, password string) {
 	if api.accounts == nil {
 		api.accounts = map[string]string{}

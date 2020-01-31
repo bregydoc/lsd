@@ -3,7 +3,6 @@ package lsd
 import (
 	"encoding/base64"
 
-	log "github.com/sirupsen/logrus"
 	bolt "go.etcd.io/bbolt"
 )
 
@@ -22,7 +21,7 @@ func (lsd *LSD) registerUserSession(userID, sessionID string) error {
 			return err
 		}
 
-		if err =b.Put([]byte(userID), []byte(sessionID)); err != nil {
+		if err = b.Put([]byte(userID), []byte(sessionID)); err != nil {
 			return err
 		}
 
@@ -78,15 +77,12 @@ func (lsd *LSD) savePrivateKey(userID string, privateKey []byte) error {
 	})
 }
 
-
 func (lsd *LSD) getPrivateKey(userID string) ([]byte, error) {
 	var privateKey []byte
 	if err := lsd.db.View(func(tx *bolt.Tx) error {
 		// defer tx.Rollback()
-		log.Info(userID)
 		b := tx.Bucket([]byte(keypairsBucket))
 		payload := string(b.Get([]byte(userID)))
-		log.Info("payload ", payload)
 		var err error
 		privateKey, err = base64.StdEncoding.DecodeString(payload)
 		if err != nil {
@@ -101,7 +97,6 @@ func (lsd *LSD) getPrivateKey(userID string) ([]byte, error) {
 
 	return privateKey, nil
 }
-
 
 func (lsd *LSD) clearKeyPair(userID string) error {
 	return lsd.db.Update(func(tx *bolt.Tx) error {

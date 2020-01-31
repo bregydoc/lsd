@@ -6,12 +6,13 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-
-	log "github.com/sirupsen/logrus"
+	"errors"
 )
 
+const keySize = 2048
+
 func (lsd *LSD) generateNewKeyPair() ([]byte, error) {
-	key, err := rsa.GenerateKey(rand.Reader, 2048)
+	key, err := rsa.GenerateKey(rand.Reader, keySize)
 	if err != nil {
 		return nil, err
 	}
@@ -23,18 +24,15 @@ func (lsd *LSD) generateNewKeyPair() ([]byte, error) {
 
 	privateKey := bytes.NewBuffer([]byte{})
 
-
 	if err = pem.Encode(privateKey, pKeyBlock); err != nil {
 		return nil, err
 	}
-
 
 	return privateKey.Bytes(), nil
 }
 
 func (lsd *LSD) privateKeyFromBytes(data []byte) (*rsa.PrivateKey, error) {
 	pKeyBlock, _ := pem.Decode(data)
-	log.Info("string(pKeyBlock.Bytes)", string(data))
 	return x509.ParsePKCS1PrivateKey(pKeyBlock.Bytes)
 }
 
@@ -57,4 +55,20 @@ func (lsd *LSD) publicKeyBytesFromPrivateKeyBytes(data []byte) ([]byte, error) {
 	return publicKey.Bytes(), nil
 }
 
-// func (lsd *LSD) ifPublicKeyMatchWithPrivateKey(privateKey []byte, publicKey string)
+func (lsd *LSD) ifPublicKeyMatchWithUserID(userID string, publicKey []byte) error {
+	private, err := lsd.getPrivateKey(userID)
+	if err != nil {
+		return err
+	}
+
+	public, err := lsd.publicKeyBytesFromPrivateKeyBytes(private)
+	if err != nil {
+		return err
+	}
+
+	if !bytes.Equal(public, publicKey) {
+		return errors.New("invalid public key, it isn't equal to our saved key")
+	}
+
+	return nil
+}

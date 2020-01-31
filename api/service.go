@@ -1,33 +1,32 @@
 package api
 
-
 type NotificationPayload struct {
-	To                   []string
-	Notification         Notification
+	To           []string
+	Notification Notification
 }
 
 type NotificationResult struct {
-	Ok                   bool
-	NotificationID       string
+	Ok             bool
+	Notifications map[string]string
 }
 
 type Notification struct {
-	Title                string
-	Body                 string
-	Options              []string
+	Title   string
+	Body    string
+	Options []string
 }
 
 type NewKeyPairPayload struct {
-	UserID               string
+	UserID string
 }
 
 type KeyPairResult struct {
-	UserID               string
-	PublicKey            []byte
+	UserID    string
+	PublicKey []byte
 }
 
 type KeyPairPayload struct {
-	UserID               string
+	UserID string
 }
 
 type ServiceHTTP interface {
@@ -35,4 +34,3 @@ type ServiceHTTP interface {
 	GenerateNewKeyPairHTTP(*NewKeyPairPayload) (*KeyPairResult, error)
 	GetKeyPairHTTP(*KeyPairPayload) (*KeyPairResult, error)
 }
-

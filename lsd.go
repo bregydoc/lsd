@@ -8,7 +8,7 @@ import (
 )
 
 type LSD struct {
-	db *bolt.DB
+	db     *bolt.DB
 	secure bool
 
 	sessionsMap map[string]*melody.Session
@@ -30,5 +30,5 @@ func NewLSD(pathDB string, secure bool) (*LSD, error) {
 }
 
 func (lsd *LSD) RunWSService(wsPort int) error {
-	return lsd.launchClientWSServer(fmt.Sprintf(":%d",wsPort))
+	return lsd.launchClientWSServer(fmt.Sprintf(":%d", wsPort))
 }

@@ -8,10 +8,10 @@ import (
 )
 
 type API struct {
-	ready bool
-	engine *gin.Engine
+	ready    bool
+	engine   *gin.Engine
 	accounts map[string]string
-	s ServiceHTTP
+	s        ServiceHTTP
 }
 
 func (api *API) registerRoutes() {

@@ -5,17 +5,14 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
-	"encoding/asn1"
 	"encoding/pem"
 )
 
-func (lsd *LSD) generateNewKeyPair() ([]byte, []byte, error) {
+func (lsd *LSD) generateNewKeyPair() ([]byte, error) {
 	key, err := rsa.GenerateKey(rand.Reader, 2048)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
-
-	pKey := key.Public()
 
 	var pKeyBlock = &pem.Block{
 		Type:  "PRIVATE KEY",
@@ -23,25 +20,12 @@ func (lsd *LSD) generateNewKeyPair() ([]byte, []byte, error) {
 	}
 
 	privateKey := bytes.NewBuffer([]byte{})
-	publicKey := bytes.NewBuffer([]byte{})
+
 
 	if err = pem.Encode(privateKey, pKeyBlock); err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
-	asn1Bytes, err := asn1.Marshal(pKey)
-	if err != nil {
-		return nil, nil, err
-	}
 
-	var pemKey = &pem.Block{
-		Type:  "PUBLIC KEY",
-		Bytes: asn1Bytes,
-	}
-
-	if err = pem.Encode(publicKey, pemKey); err != nil {
-		return nil, nil, err
-	}
-
-	return publicKey.Bytes(), privateKey.Bytes(), nil
+	return privateKey.Bytes(), nil
 }

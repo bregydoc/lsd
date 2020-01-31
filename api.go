@@ -24,12 +24,12 @@ func (lsd *LSD) SendNotificationHTTP(p *api.NotificationPayload) (*api.Notificat
 }
 
 func (lsd *LSD) GenerateNewKeyPairHTTP(p *api.NewKeyPairPayload) (*api.KeyPairResult, error) {
-	publicKey, privateKey, err := lsd.generateNewKeyPair()
+	privateKey, err := lsd.generateNewKeyPair()
 	if err != nil {
 		return nil, err
 	}
 
-	if err = lsd.saveKeyPair(p.UserID, publicKey, privateKey); err != nil {
+	if err = lsd.savePrivateKey(p.UserID, publicKey, privateKey); err != nil {
 		return nil, err
 	}
 
@@ -37,7 +37,7 @@ func (lsd *LSD) GenerateNewKeyPairHTTP(p *api.NewKeyPairPayload) (*api.KeyPairRe
 }
 
 func (lsd *LSD) GetKeyPairHTTP(p *api.KeyPairPayload) (*api.KeyPairResult, error) {
-	public, _, err := lsd.getKeyPair(p.UserID)
+	public, _, err := lsd.getPrivateKey(p.UserID)
 	if err != nil {
 		return nil, err
 	}

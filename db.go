@@ -1,6 +1,7 @@
 package lsd
 
 import (
+	"crypto/rsa"
 	"encoding/base64"
 	"errors"
 	"strings"
@@ -57,7 +58,7 @@ func (lsd *LSD) clearUserSession(userID string) error {
 	})
 }
 
-func (lsd *LSD) saveKeyPair(userID string, publicKey []byte, privateKey []byte) error {
+func (lsd *LSD) savePrivateKey(userID string, privateKey []byte) error {
 	return lsd.db.Update(func(tx *bolt.Tx) error {
 		defer tx.Rollback()
 		b, err := tx.CreateBucketIfNotExists([]byte(keypairsBucket))
@@ -65,12 +66,9 @@ func (lsd *LSD) saveKeyPair(userID string, publicKey []byte, privateKey []byte) 
 			return err
 		}
 
-		public64 := base64.StdEncoding.EncodeToString(publicKey)
 		private64 := base64.StdEncoding.EncodeToString(privateKey)
 
-		payload := public64 + ":" + private64
-
-		if err := b.Put([]byte(userID), []byte(payload)); err != nil {
+		if err := b.Put([]byte(userID), []byte(private64)); err != nil {
 			return err
 		}
 
@@ -79,7 +77,7 @@ func (lsd *LSD) saveKeyPair(userID string, publicKey []byte, privateKey []byte) 
 }
 
 
-func (lsd *LSD) getKeyPair(userID string) ([]byte, []byte, error) {
+func (lsd *LSD) getPrivateKey(userID string) (*rsa.PrivateKey, error) {
 	var publicKey, privateKey []byte
 	if err := lsd.db.View(func(tx *bolt.Tx) error {
 		defer tx.Rollback()

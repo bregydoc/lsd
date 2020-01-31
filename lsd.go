@@ -1,6 +1,8 @@
 package lsd
 
 import (
+	"fmt"
+
 	bolt "go.etcd.io/bbolt"
 	"gopkg.in/olahol/melody.v1"
 )
@@ -27,6 +29,6 @@ func NewLSD(pathDB string, secure bool) (*LSD, error) {
 	return lsd, nil
 }
 
-func (lsd *LSD) RunWSService(wsPort string) error {
-	return lsd.launchClientWSServer(wsPort)
+func (lsd *LSD) RunWSService(wsPort int) error {
+	return lsd.launchClientWSServer(fmt.Sprintf(":%d",wsPort))
 }

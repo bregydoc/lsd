@@ -7,12 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func New(service Service, accounts map[string]string) *API {
+func New(service ServiceHTTP, accounts map[string]string) *API {
 	if accounts == nil || len(accounts) == 0{
 		accounts = map[string]string{
 			"admin": "admin",
 		}
 	}
+	gin.SetMode(gin.ReleaseMode)
 	p := &API{accounts:accounts, s:service, engine: gin.New()}
 	p.registerRoutes()
 	return p

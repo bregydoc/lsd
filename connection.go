@@ -11,12 +11,12 @@ import (
 	"gopkg.in/olahol/melody.v1"
 )
 
-
-
 func (lsd *LSD) launchClientWSServer(addr ...string) error {
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	m := melody.New()
 	lock := new(sync.Mutex)
+
 
 	if lsd.sessionsMap == nil {
 		lsd.sessionsMap = map[string]*melody.Session{}
@@ -55,7 +55,7 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 				return  // TODO: Send an error message
 			}
 		} else {
-			public, _, err := lsd.getKeyPair(userID)
+			public, _, err := lsd.getPrivateKey(userID)
 			if err != nil {
 				log.Error(err)
 				return

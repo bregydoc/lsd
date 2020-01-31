@@ -37,7 +37,7 @@ func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload
 		return nil, err
 	}
 
-	if err = lsd.saveKeyPair(p.UserID, publicKey, privateKey); err != nil {
+	if err = lsd.savePrivateKey(p.UserID, publicKey, privateKey); err != nil {
 		return nil, err
 	}
 
@@ -45,7 +45,7 @@ func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload
 }
 
 func (lsd *LSD) GetKeyPair(c context.Context, p *proto.KeyPairPayload) (*proto.KeyPairResult, error) {
-	public, _, err := lsd.getKeyPair(p.UserID)
+	public, _, err := lsd.getPrivateKey(p.UserID)
 	if err != nil {
 		return nil, err
 	}

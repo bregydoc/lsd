@@ -11,7 +11,7 @@ type API struct {
 	ready bool
 	engine *gin.Engine
 	accounts map[string]string
-	s Service
+	s ServiceHTTP
 }
 
 func (api *API) registerRoutes() {
@@ -27,7 +27,7 @@ func (api *API) registerRoutes() {
 			return
 		}
 
-		result, err := api.s.SendNotification(payload)
+		result, err := api.s.SendNotificationHTTP(payload)
 		if err != nil {
 			log.Error(err)
 			c.JSON(http.StatusInternalServerError, gin.H{
@@ -49,7 +49,7 @@ func (api *API) registerRoutes() {
 			return
 		}
 
-		result, err := api.s.GenerateNewKeyPair(payload)
+		result, err := api.s.GenerateNewKeyPairHTTP(payload)
 		if err != nil {
 			log.Error(err)
 			c.JSON(http.StatusInternalServerError, gin.H{
@@ -71,7 +71,7 @@ func (api *API) registerRoutes() {
 			return
 		}
 
-		result, err := api.s.GetKeyPair(payload)
+		result, err := api.s.GetKeyPairHTTP(payload)
 		if err != nil {
 			log.Error(err)
 			c.JSON(http.StatusInternalServerError, gin.H{

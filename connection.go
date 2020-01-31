@@ -3,7 +3,7 @@ package lsd
 import (
 	"bytes"
 	"encoding/base64"
-	"strings"
+	"net/url"
 	"sync"
 
 	"github.com/gin-gonic/gin"
@@ -22,25 +22,41 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 		lsd.sessionsMap = map[string]*melody.Session{}
 	}
 
+	log.Info("registering lsd router for ws")
 	r.GET("/ws", func(c *gin.Context) {
+		log.Info("/ws ", c.Request.Host)
 		if err := m.HandleRequest(c.Writer, c.Request); err != nil {
 			panic(err)
 		}
 	})
 
 	m.HandleConnect(func(s *melody.Session) {
+		log.Info("connecting... ", s.Request.Host)
 		lock.Lock()
-		protocolHeader := s.Request.Header.Get("Sec-WebSocket-Protocol")
-		chunks :=  strings.Split(protocolHeader, ",")
 
-		userID := chunks[0]
-		publicKey := chunks[0]
-
-		if len(chunks) > 1 {
-			publicKey = chunks[1]
+		log.Info(s.Request.RequestURI)
+		values, err := url.ParseQuery(s.Request.RequestURI)
+		if err != nil {
+			log.Error(err)
+			return
 		}
+		// protocolHeader := s.Request.Header.Get("Sec-WebSocket-Protocol")
+		userIDFromQuery := values.Get("userID")
+		publicKeyFromQuery := values.Get("publicKey")
 
-		isMono := userID == publicKey
+		log.Info(userIDFromQuery, publicKeyFromQuery)
+		// chunks :=  strings.Split(protocolHeader, ",")
+
+		userID := userIDFromQuery
+		publicKey := publicKeyFromQuery
+		//
+		// if len(chunks) > 1 {
+		// 	publicKey = chunks[1]
+		// }
+
+		log.Info("userID, publicKey ", userID, publicKey)
+
+		isMono := publicKey == ""
 
 		if lsd.secure && isMono {
 			log.Error("lsd.secure && isMono")
@@ -55,7 +71,14 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 				return  // TODO: Send an error message
 			}
 		} else {
-			public, _, err := lsd.getPrivateKey(userID)
+			private, err := lsd.getPrivateKey(userID)
+			log.Info("private key x: ", string(private))
+			if err != nil {
+				log.Error(err)
+				return
+			}
+
+			public, err := lsd.publicKeyBytesFromPrivateKeyBytes(private)
 			if err != nil {
 				log.Error(err)
 				return
@@ -79,6 +102,10 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 				return  // TODO: Send an error message
 			}
 		}
+		if err := s.Write([]byte("PONG")); err != nil {
+			log.Error(err)
+			return
+		}
 
 		lock.Unlock()
 	})
@@ -87,10 +114,5 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 	//
 	// })
 
-	if err := r.Run(addr...); err != nil {
-		log.Error(err)
-		return err
-	}
-
-	return nil
+	return r.Run(addr...)
 }

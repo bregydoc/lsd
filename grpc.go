@@ -32,12 +32,17 @@ func (lsd *LSD) SendNotification(c context.Context, p *proto.NotificationPayload
 }
 
 func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload) (*proto.KeyPairResult, error) {
-	publicKey, privateKey, err := lsd.generateNewKeyPair()
+	privateKey, err := lsd.generateNewKeyPair()
 	if err != nil {
 		return nil, err
 	}
 
-	if err = lsd.savePrivateKey(p.UserID, publicKey, privateKey); err != nil {
+	if err = lsd.savePrivateKey(p.UserID, privateKey); err != nil {
+		return nil, err
+	}
+
+	publicKey ,err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
+	if err != nil {
 		return nil, err
 	}
 
@@ -45,11 +50,15 @@ func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload
 }
 
 func (lsd *LSD) GetKeyPair(c context.Context, p *proto.KeyPairPayload) (*proto.KeyPairResult, error) {
-	public, _, err := lsd.getPrivateKey(p.UserID)
+	privateKey, err := lsd.getPrivateKey(p.UserID)
 	if err != nil {
 		return nil, err
 	}
 
-	return &proto.KeyPairResult{UserID: p.UserID, PublicKey: public}, nil
+	publicKey ,err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
+	if err != nil {
+		return nil, err
+	}
+	return &proto.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
 }
 

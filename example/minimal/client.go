@@ -24,13 +24,13 @@ func main() {
 	lsd := proto.NewLSDClient(conn)
 
 	res, err := lsd.GenerateNewKeyPair(context.Background(), &proto.NewKeyPairPayload{
-		UserID:               "bregydoc",
+		UserID: "bregydoc",
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	log.Info("userID: ", res.UserID)
-	log.Info("publicKey: ", res.PublicKey)
+	log.Info("publicKey: ", string(res.PublicKey))
 }
 

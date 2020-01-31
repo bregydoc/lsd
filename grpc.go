@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 
-
 	proto "github.com/bregydoc/lsd/proto"
 	"github.com/rs/xid"
 )
@@ -16,9 +15,10 @@ func (lsd *LSD) SendNotification(c context.Context, p *proto.NotificationPayload
 		return nil, errors.New("invalid notification")
 	}
 
+	id := xid.New().String()
 	for _, to := range p.To {
 		if err := lsd.emitNotification(&Notification{
-			ID:          xid.New().String(),
+			ID:          id,
 			To:          to,
 			Title:       p.Notification.Title,
 			Body:        Markdown(p.Notification.Body),
@@ -28,7 +28,7 @@ func (lsd *LSD) SendNotification(c context.Context, p *proto.NotificationPayload
 		}
 	}
 
-	return &proto.NotificationResult{Ok: true}, nil
+	return &proto.NotificationResult{Ok: true, NotificationID: id}, nil
 }
 
 func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload) (*proto.KeyPairResult, error) {
@@ -41,7 +41,7 @@ func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload
 		return nil, err
 	}
 
-	return nil, err
+	return &proto.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
 }
 
 func (lsd *LSD) GetKeyPair(c context.Context, p *proto.KeyPairPayload) (*proto.KeyPairResult, error) {

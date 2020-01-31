@@ -1,0 +1,36 @@
+syntax = "proto3";
+package lsd;
+
+service LSD {
+    rpc SendNotification(NotificationPayload) returns (NotificationResult);
+    rpc GenerateNewKeyPair(NewKeyPairPayload) returns (KeyPairResult);
+    rpc GetKeyPair(KeyPairPayload) returns (KeyPairResult);
+}
+
+message NotificationPayload {
+    repeated string to = 1;
+    Notification notification = 2;
+}
+
+message NotificationResult {
+    bool ok = 1;
+}
+
+message Notification  {
+    string title = 1;
+    string body = 2;
+    repeated string options = 3;
+}
+
+message NewKeyPairPayload {
+    string userID = 1;
+}
+
+message KeyPairPayload {
+    string userID = 1;
+}
+
+message KeyPairResult {
+    string userID = 1;
+    bytes publicKey = 2;
+}

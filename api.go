@@ -53,8 +53,8 @@ func (lsd *LSD) GenerateNewTokenForUserHTTP(p *api.NewTokenPayload) (*api.TokenR
 	}
 
 	return &api.TokenResult{
-		UserID:               p.UserID,
-		Token:                token,
+		UserID: p.UserID,
+		Token:  token,
 	}, nil
 }
 

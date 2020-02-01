@@ -6,7 +6,7 @@ type NotificationPayload struct {
 }
 
 type NotificationResult struct {
-	Ok             bool
+	Ok            bool
 	Notifications map[string]string
 }
 
@@ -34,14 +34,13 @@ type NewTokenPayload struct {
 }
 
 type TokenResult struct {
-	UserID    string
-	Token string
+	UserID string
+	Token  string
 }
 
 type TokenPayload struct {
 	UserID string
 }
-
 
 type ServiceHTTP interface {
 	SendNotificationHTTP(*NotificationPayload) (*NotificationResult, error)

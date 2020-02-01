@@ -111,7 +111,6 @@ func (lsd *LSD) clearPrivateKey(userID string) error {
 	})
 }
 
-
 func (lsd *LSD) saveToken(userID, token string) error {
 	return lsd.db.Update(func(tx *bolt.Tx) error {
 		// defer tx.Rollback()

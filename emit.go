@@ -38,6 +38,6 @@ func (lsd *LSD) emitNotification(notification *Notification) error {
 		return err
 	}
 
-	log.Info("after: ",string(payload))
+	log.Info("after: ", string(payload))
 	return s.Write(payload)
 }

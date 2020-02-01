@@ -30,6 +30,7 @@ func (lsd *LSD) SendNotification(c context.Context, p *proto.NotificationPayload
 
 	return &proto.NotificationResult{Ok: true, Notifications: notifications}, nil
 }
+
 //
 // func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload) (*proto.KeyPairResult, error) {
 // 	privateKey, err := lsd.generateNewKeyPair()
@@ -60,8 +61,8 @@ func (lsd *LSD) GenerateNewTokenForUser(c context.Context, p *proto.NewTokenPayl
 	}
 
 	return &proto.TokenResult{
-		UserID:               p.UserID,
-		Token:                token,
+		UserID: p.UserID,
+		Token:  token,
 	}, nil
 }
 

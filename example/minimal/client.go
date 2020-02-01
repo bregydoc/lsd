@@ -33,11 +33,11 @@ func main() {
 	// log.Info("userID: ", res.UserID)
 	// log.Info("publicKey: ", string(res.PublicKey))
 	res, err := lsd.SendNotification(context.Background(), &proto.NotificationPayload{
-		To:                   []string{"bregydoc"},
-		Notification:         &proto.Notification{
-			Title:                "Hello World",
-			Body:                 "It's a lsd notification!",
-			Options:              []string{"Yeah!", "Ok"},
+		To: []string{"bregydoc"},
+		Notification: &proto.Notification{
+			Title:   "Hello World",
+			Body:    "It's a lsd notification!",
+			Options: []string{"Yeah!", "Ok"},
 		},
 	})
 	if err != nil {

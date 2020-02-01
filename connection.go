@@ -40,7 +40,8 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 		values := uri.Query()
 
 		userID := values.Get("userID")
-		publicKey := values.Get("publicKey")
+		// publicKey := values.Get("publicKey")
+		token := values.Get("token")
 
 
 		u64, err := base64.StdEncoding.DecodeString(userID)
@@ -49,18 +50,12 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 			return
 		}
 
-		p64, err := base64.StdEncoding.DecodeString(publicKey)
-		if err != nil {
-			log.Error(err)
-			return
-		}
 
 		userID = string(u64)
-		publicKey = string(p64)
 
 		log.Info("userID: ", userID)
 
-		isMono := publicKey == ""
+		isMono := token == ""
 
 		if lsd.secure && isMono {
 			log.Error("lsd.secure && isMono")
@@ -75,7 +70,11 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 				return // TODO: Send an error message
 			}
 		} else {
-			if err := lsd.ifPublicKeyMatchWithUserID(userID, p64); err != nil {
+			// if err := lsd.ifPublicKeyMatchWithUserID(userID, p64); err != nil {
+			// 	log.Error(err)
+			// 	return
+
+			if err := lsd.ifTokenMatchWithUserID(userID, token); err != nil {
 				log.Error(err)
 				return
 			}

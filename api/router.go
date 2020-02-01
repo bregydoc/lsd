@@ -39,8 +39,30 @@ func (api *API) registerRoutes() {
 		c.JSON(http.StatusOK, result)
 	})
 
-	lsd.POST("/generate-new-key-pair", func(c *gin.Context) {
-		payload := new(NewKeyPairPayload)
+	// lsd.POST("/generate-new-key-pair", func(c *gin.Context) {
+	// 	payload := new(NewKeyPairPayload)
+	// 	if err := c.BindJSON(payload); err != nil {
+	// 		log.Error(err)
+	// 		c.JSON(http.StatusBadRequest, gin.H{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+	//
+	// 	result, err := api.s.GenerateNewKeyPairHTTP(payload)
+	// 	if err != nil {
+	// 		log.Error(err)
+	// 		c.JSON(http.StatusInternalServerError, gin.H{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+	//
+	// 	c.JSON(http.StatusOK, result)
+	// })
+
+	lsd.POST("/generate-new-token-for-user", func(c *gin.Context) {
+		payload := new(NewTokenPayload)
 		if err := c.BindJSON(payload); err != nil {
 			log.Error(err)
 			c.JSON(http.StatusBadRequest, gin.H{
@@ -49,7 +71,7 @@ func (api *API) registerRoutes() {
 			return
 		}
 
-		result, err := api.s.GenerateNewKeyPairHTTP(payload)
+		result, err := api.s.GenerateNewTokenForUserHTTP(payload)
 		if err != nil {
 			log.Error(err)
 			c.JSON(http.StatusInternalServerError, gin.H{
@@ -61,8 +83,30 @@ func (api *API) registerRoutes() {
 		c.JSON(http.StatusOK, result)
 	})
 
-	lsd.POST("/get-key-pair", func(c *gin.Context) {
-		payload := new(KeyPairPayload)
+	// lsd.POST("/get-key-pair", func(c *gin.Context) {
+	// 	payload := new(KeyPairPayload)
+	// 	if err := c.BindJSON(payload); err != nil {
+	// 		log.Error(err)
+	// 		c.JSON(http.StatusBadRequest, gin.H{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+	//
+	// 	result, err := api.s.GetKeyPairHTTP(payload)
+	// 	if err != nil {
+	// 		log.Error(err)
+	// 		c.JSON(http.StatusInternalServerError, gin.H{
+	// 			"error": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+	//
+	// 	c.JSON(http.StatusOK, result)
+	// })
+
+	lsd.POST("/get-token", func(c *gin.Context) {
+		payload := new(TokenPayload)
 		if err := c.BindJSON(payload); err != nil {
 			log.Error(err)
 			c.JSON(http.StatusBadRequest, gin.H{
@@ -71,7 +115,7 @@ func (api *API) registerRoutes() {
 			return
 		}
 
-		result, err := api.s.GetKeyPairHTTP(payload)
+		result, err := api.s.GetTokenHTTP(payload)
 		if err != nil {
 			log.Error(err)
 			c.JSON(http.StatusInternalServerError, gin.H{

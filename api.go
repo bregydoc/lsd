@@ -24,33 +24,58 @@ func (lsd *LSD) SendNotificationHTTP(p *api.NotificationPayload) (*api.Notificat
 	return &api.NotificationResult{Ok: true, Notifications: notifications}, nil
 }
 
-func (lsd *LSD) GenerateNewKeyPairHTTP(p *api.NewKeyPairPayload) (*api.KeyPairResult, error) {
-	privateKey, err := lsd.generateNewKeyPair()
+// func (lsd *LSD) GenerateNewKeyPairHTTP(p *api.NewKeyPairPayload) (*api.KeyPairResult, error) {
+// 	privateKey, err := lsd.generateNewKeyPair()
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// 	if err = lsd.savePrivateKey(p.UserID, privateKey); err != nil {
+// 		return nil, err
+// 	}
+//
+// 	publicKey, err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// 	return &api.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
+// }
+
+func (lsd *LSD) GenerateNewTokenForUserHTTP(p *api.NewTokenPayload) (*api.TokenResult, error) {
+	token, err := lsd.generateNewToken()
 	if err != nil {
 		return nil, err
 	}
 
-	if err = lsd.savePrivateKey(p.UserID, privateKey); err != nil {
+	if err = lsd.saveToken(p.UserID, token); err != nil {
 		return nil, err
 	}
 
-	publicKey, err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return &api.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
+	return &api.TokenResult{
+		UserID:               p.UserID,
+		Token:                token,
+	}, nil
 }
 
-func (lsd *LSD) GetKeyPairHTTP(p *api.KeyPairPayload) (*api.KeyPairResult, error) {
-	privateKey, err := lsd.getPrivateKey(p.UserID)
+// func (lsd *LSD) GetKeyPairHTTP(p *api.KeyPairPayload) (*api.KeyPairResult, error) {
+// 	privateKey, err := lsd.getPrivateKey(p.UserID)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// 	publicKey, err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &api.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
+// }
+
+func (lsd *LSD) GetTokenHTTP(p *api.TokenPayload) (*api.TokenResult, error) {
+	token, err := lsd.getToken(p.UserID)
 	if err != nil {
 		return nil, err
 	}
 
-	publicKey, err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
-	if err != nil {
-		return nil, err
-	}
-	return &api.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
+	return &api.TokenResult{UserID: p.UserID, Token: token}, nil
 }

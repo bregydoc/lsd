@@ -3,8 +3,10 @@ package lsd;
 
 service LSD {
     rpc SendNotification(NotificationPayload) returns (NotificationResult);
-    rpc GenerateNewKeyPair(NewKeyPairPayload) returns (KeyPairResult);
-    rpc GetKeyPair(KeyPairPayload) returns (KeyPairResult);
+//    rpc GenerateNewKeyPair(NewKeyPairPayload) returns (KeyPairResult);
+    rpc GenerateNewTokenForUser(NewTokenPayload) returns (TokenResult);
+//    rpc GetKeyPair(KeyPairPayload) returns (KeyPairResult);
+    rpc GetToken(TokenPayload) returns (TokenResult);
 }
 
 message NotificationPayload {
@@ -24,15 +26,28 @@ message Notification  {
     repeated string options = 3;
 }
 
-message NewKeyPairPayload {
+//message NewKeyPairPayload {
+//    string userID = 1;
+//}
+
+message NewTokenPayload {
     string userID = 1;
 }
 
-message KeyPairPayload {
+//message KeyPairPayload {
+//    string userID = 1;
+//}
+
+message TokenPayload {
     string userID = 1;
 }
 
-message KeyPairResult {
+//message KeyPairResult {
+//    string userID = 1;
+//    bytes publicKey = 2;
+//}
+
+message TokenResult {
     string userID = 1;
-    bytes publicKey = 2;
+    string token = 2;
 }

@@ -30,34 +30,59 @@ func (lsd *LSD) SendNotification(c context.Context, p *proto.NotificationPayload
 
 	return &proto.NotificationResult{Ok: true, Notifications: notifications}, nil
 }
+//
+// func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload) (*proto.KeyPairResult, error) {
+// 	privateKey, err := lsd.generateNewKeyPair()
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// 	if err = lsd.savePrivateKey(p.UserID, privateKey); err != nil {
+// 		return nil, err
+// 	}
+//
+// 	publicKey, err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// 	return &proto.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
+// }
 
-func (lsd *LSD) GenerateNewKeyPair(c context.Context, p *proto.NewKeyPairPayload) (*proto.KeyPairResult, error) {
-	privateKey, err := lsd.generateNewKeyPair()
+func (lsd *LSD) GenerateNewTokenForUser(c context.Context, p *proto.NewTokenPayload) (*proto.TokenResult, error) {
+	token, err := lsd.generateNewToken()
 	if err != nil {
 		return nil, err
 	}
 
-	if err = lsd.savePrivateKey(p.UserID, privateKey); err != nil {
+	if err = lsd.saveToken(p.UserID, token); err != nil {
 		return nil, err
 	}
 
-	publicKey, err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return &proto.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
+	return &proto.TokenResult{
+		UserID:               p.UserID,
+		Token:                token,
+	}, nil
 }
 
-func (lsd *LSD) GetKeyPair(c context.Context, p *proto.KeyPairPayload) (*proto.KeyPairResult, error) {
-	privateKey, err := lsd.getPrivateKey(p.UserID)
+// func (lsd *LSD) GetKeyPair(c context.Context, p *proto.KeyPairPayload) (*proto.KeyPairResult, error) {
+// 	privateKey, err := lsd.getPrivateKey(p.UserID)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+//
+// 	publicKey, err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &proto.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
+// }
+
+func (lsd *LSD) GetToken(c context.Context, p *proto.TokenPayload) (*proto.TokenResult, error) {
+	token, err := lsd.getToken(p.UserID)
 	if err != nil {
 		return nil, err
 	}
 
-	publicKey, err := lsd.publicKeyBytesFromPrivateKeyBytes(privateKey)
-	if err != nil {
-		return nil, err
-	}
-	return &proto.KeyPairResult{UserID: p.UserID, PublicKey: publicKey}, nil
+	return &proto.TokenResult{UserID: p.UserID, Token: token}, nil
 }

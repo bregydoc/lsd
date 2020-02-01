@@ -8,6 +8,7 @@ import (
 
 const sessionsBucket = "sessions"
 const keypairsBucket = "keypairs"
+const tokensBucket = "tokens"
 
 func openBoltConnection(path string) (*bolt.DB, error) {
 	return bolt.Open(path, 0600, nil)
@@ -98,7 +99,51 @@ func (lsd *LSD) getPrivateKey(userID string) ([]byte, error) {
 	return privateKey, nil
 }
 
-func (lsd *LSD) clearKeyPair(userID string) error {
+func (lsd *LSD) clearPrivateKey(userID string) error {
+	return lsd.db.Update(func(tx *bolt.Tx) error {
+		// defer tx.Rollback()
+		b := tx.Bucket([]byte(keypairsBucket))
+		if err := b.Delete([]byte(userID)); err != nil {
+			return err
+		}
+		// return tx.Commit()
+		return nil
+	})
+}
+
+
+func (lsd *LSD) saveToken(userID, token string) error {
+	return lsd.db.Update(func(tx *bolt.Tx) error {
+		// defer tx.Rollback()
+		b, err := tx.CreateBucketIfNotExists([]byte(tokensBucket))
+		if err != nil {
+			return err
+		}
+
+		if err := b.Put([]byte(userID), []byte(token)); err != nil {
+			return err
+		}
+		// return tx.Commit()
+		return nil
+	})
+}
+
+func (lsd *LSD) getToken(userID string) (string, error) {
+	var privateKey string
+	if err := lsd.db.View(func(tx *bolt.Tx) error {
+		// defer tx.Rollback()
+		b := tx.Bucket([]byte(keypairsBucket))
+		privateKey = string(b.Get([]byte(userID)))
+		// return tx.Commit()
+		return nil
+	}); err != nil {
+		return "", err
+	}
+
+	return privateKey, nil
+}
+
+func (lsd *LSD) clearToken(userID string) error {
 	return lsd.db.Update(func(tx *bolt.Tx) error {
 		// defer tx.Rollback()
 		b := tx.Bucket([]byte(keypairsBucket))

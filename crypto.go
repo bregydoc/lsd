@@ -72,3 +72,16 @@ func (lsd *LSD) ifPublicKeyMatchWithUserID(userID string, publicKey []byte) erro
 
 	return nil
 }
+
+func (lsd *LSD) ifTokenMatchWithUserID(userID, token string) error {
+	savedToken, err := lsd.getToken(userID)
+	if err != nil {
+		return err
+	}
+
+	if savedToken != token {
+		return errors.New("invalid token, it not match with ours")
+	}
+
+	return nil
+}

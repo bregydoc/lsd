@@ -23,6 +23,7 @@ func (lsd *LSD) encryptNotification(privateKey []byte, message string) ([]byte, 
 	// 	[]byte(message),
 	// 	[]byte(""),
 	// )
+
 	if err != nil {
 		return nil, err
 	}

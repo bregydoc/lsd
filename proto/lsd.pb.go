@@ -173,129 +173,129 @@ func (m *Notification) GetOptions() []string {
 	return nil
 }
 
-type NewKeyPairPayload struct {
+type NewTokenPayload struct {
 	UserID               string   `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *NewKeyPairPayload) Reset()         { *m = NewKeyPairPayload{} }
-func (m *NewKeyPairPayload) String() string { return proto.CompactTextString(m) }
-func (*NewKeyPairPayload) ProtoMessage()    {}
-func (*NewKeyPairPayload) Descriptor() ([]byte, []int) {
+func (m *NewTokenPayload) Reset()         { *m = NewTokenPayload{} }
+func (m *NewTokenPayload) String() string { return proto.CompactTextString(m) }
+func (*NewTokenPayload) ProtoMessage()    {}
+func (*NewTokenPayload) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9ca3cecd9ea5e5eb, []int{3}
 }
 
-func (m *NewKeyPairPayload) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_NewKeyPairPayload.Unmarshal(m, b)
+func (m *NewTokenPayload) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_NewTokenPayload.Unmarshal(m, b)
 }
-func (m *NewKeyPairPayload) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_NewKeyPairPayload.Marshal(b, m, deterministic)
+func (m *NewTokenPayload) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_NewTokenPayload.Marshal(b, m, deterministic)
 }
-func (m *NewKeyPairPayload) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NewKeyPairPayload.Merge(m, src)
+func (m *NewTokenPayload) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NewTokenPayload.Merge(m, src)
 }
-func (m *NewKeyPairPayload) XXX_Size() int {
-	return xxx_messageInfo_NewKeyPairPayload.Size(m)
+func (m *NewTokenPayload) XXX_Size() int {
+	return xxx_messageInfo_NewTokenPayload.Size(m)
 }
-func (m *NewKeyPairPayload) XXX_DiscardUnknown() {
-	xxx_messageInfo_NewKeyPairPayload.DiscardUnknown(m)
+func (m *NewTokenPayload) XXX_DiscardUnknown() {
+	xxx_messageInfo_NewTokenPayload.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_NewKeyPairPayload proto.InternalMessageInfo
+var xxx_messageInfo_NewTokenPayload proto.InternalMessageInfo
 
-func (m *NewKeyPairPayload) GetUserID() string {
+func (m *NewTokenPayload) GetUserID() string {
 	if m != nil {
 		return m.UserID
 	}
 	return ""
 }
 
-type KeyPairPayload struct {
+type TokenPayload struct {
 	UserID               string   `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *KeyPairPayload) Reset()         { *m = KeyPairPayload{} }
-func (m *KeyPairPayload) String() string { return proto.CompactTextString(m) }
-func (*KeyPairPayload) ProtoMessage()    {}
-func (*KeyPairPayload) Descriptor() ([]byte, []int) {
+func (m *TokenPayload) Reset()         { *m = TokenPayload{} }
+func (m *TokenPayload) String() string { return proto.CompactTextString(m) }
+func (*TokenPayload) ProtoMessage()    {}
+func (*TokenPayload) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9ca3cecd9ea5e5eb, []int{4}
 }
 
-func (m *KeyPairPayload) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_KeyPairPayload.Unmarshal(m, b)
+func (m *TokenPayload) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TokenPayload.Unmarshal(m, b)
 }
-func (m *KeyPairPayload) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_KeyPairPayload.Marshal(b, m, deterministic)
+func (m *TokenPayload) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TokenPayload.Marshal(b, m, deterministic)
 }
-func (m *KeyPairPayload) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KeyPairPayload.Merge(m, src)
+func (m *TokenPayload) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TokenPayload.Merge(m, src)
 }
-func (m *KeyPairPayload) XXX_Size() int {
-	return xxx_messageInfo_KeyPairPayload.Size(m)
+func (m *TokenPayload) XXX_Size() int {
+	return xxx_messageInfo_TokenPayload.Size(m)
 }
-func (m *KeyPairPayload) XXX_DiscardUnknown() {
-	xxx_messageInfo_KeyPairPayload.DiscardUnknown(m)
+func (m *TokenPayload) XXX_DiscardUnknown() {
+	xxx_messageInfo_TokenPayload.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_KeyPairPayload proto.InternalMessageInfo
+var xxx_messageInfo_TokenPayload proto.InternalMessageInfo
 
-func (m *KeyPairPayload) GetUserID() string {
+func (m *TokenPayload) GetUserID() string {
 	if m != nil {
 		return m.UserID
 	}
 	return ""
 }
 
-type KeyPairResult struct {
+type TokenResult struct {
 	UserID               string   `protobuf:"bytes,1,opt,name=userID,proto3" json:"userID,omitempty"`
-	PublicKey            []byte   `protobuf:"bytes,2,opt,name=publicKey,proto3" json:"publicKey,omitempty"`
+	Token                string   `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *KeyPairResult) Reset()         { *m = KeyPairResult{} }
-func (m *KeyPairResult) String() string { return proto.CompactTextString(m) }
-func (*KeyPairResult) ProtoMessage()    {}
-func (*KeyPairResult) Descriptor() ([]byte, []int) {
+func (m *TokenResult) Reset()         { *m = TokenResult{} }
+func (m *TokenResult) String() string { return proto.CompactTextString(m) }
+func (*TokenResult) ProtoMessage()    {}
+func (*TokenResult) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9ca3cecd9ea5e5eb, []int{5}
 }
 
-func (m *KeyPairResult) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_KeyPairResult.Unmarshal(m, b)
+func (m *TokenResult) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TokenResult.Unmarshal(m, b)
 }
-func (m *KeyPairResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_KeyPairResult.Marshal(b, m, deterministic)
+func (m *TokenResult) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TokenResult.Marshal(b, m, deterministic)
 }
-func (m *KeyPairResult) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_KeyPairResult.Merge(m, src)
+func (m *TokenResult) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TokenResult.Merge(m, src)
 }
-func (m *KeyPairResult) XXX_Size() int {
-	return xxx_messageInfo_KeyPairResult.Size(m)
+func (m *TokenResult) XXX_Size() int {
+	return xxx_messageInfo_TokenResult.Size(m)
 }
-func (m *KeyPairResult) XXX_DiscardUnknown() {
-	xxx_messageInfo_KeyPairResult.DiscardUnknown(m)
+func (m *TokenResult) XXX_DiscardUnknown() {
+	xxx_messageInfo_TokenResult.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_KeyPairResult proto.InternalMessageInfo
+var xxx_messageInfo_TokenResult proto.InternalMessageInfo
 
-func (m *KeyPairResult) GetUserID() string {
+func (m *TokenResult) GetUserID() string {
 	if m != nil {
 		return m.UserID
 	}
 	return ""
 }
 
-func (m *KeyPairResult) GetPublicKey() []byte {
+func (m *TokenResult) GetToken() string {
 	if m != nil {
-		return m.PublicKey
+		return m.Token
 	}
-	return nil
+	return ""
 }
 
 func init() {
@@ -303,38 +303,38 @@ func init() {
 	proto.RegisterType((*NotificationResult)(nil), "lsd.NotificationResult")
 	proto.RegisterMapType((map[string]string)(nil), "lsd.NotificationResult.NotificationsEntry")
 	proto.RegisterType((*Notification)(nil), "lsd.Notification")
-	proto.RegisterType((*NewKeyPairPayload)(nil), "lsd.NewKeyPairPayload")
-	proto.RegisterType((*KeyPairPayload)(nil), "lsd.KeyPairPayload")
-	proto.RegisterType((*KeyPairResult)(nil), "lsd.KeyPairResult")
+	proto.RegisterType((*NewTokenPayload)(nil), "lsd.NewTokenPayload")
+	proto.RegisterType((*TokenPayload)(nil), "lsd.TokenPayload")
+	proto.RegisterType((*TokenResult)(nil), "lsd.TokenResult")
 }
 
 func init() { proto.RegisterFile("proto/lsd.proto", fileDescriptor_9ca3cecd9ea5e5eb) }
 
 var fileDescriptor_9ca3cecd9ea5e5eb = []byte{
-	// 361 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0xcf, 0x4a, 0xc3, 0x40,
-	0x10, 0xc6, 0x49, 0xa2, 0xd5, 0x4c, 0xff, 0xd8, 0x4e, 0xa5, 0x86, 0xe2, 0x21, 0xe4, 0x14, 0x14,
-	0x2a, 0x54, 0x0a, 0xe2, 0xa9, 0x87, 0x96, 0x22, 0x95, 0x52, 0xb6, 0x57, 0x2f, 0x69, 0xb3, 0x42,
-	0xe8, 0x92, 0x2d, 0xc9, 0x46, 0xc9, 0x9b, 0xf9, 0x02, 0xbe, 0x97, 0x64, 0xb3, 0xa5, 0x59, 0x4b,
-	0xc5, 0xdb, 0xcc, 0xe4, 0xf7, 0x7d, 0xbb, 0xdf, 0x6c, 0xe0, 0x6a, 0x97, 0x70, 0xc1, 0x1f, 0x58,
-	0x1a, 0x0e, 0x64, 0x85, 0x16, 0x4b, 0x43, 0xef, 0x0d, 0xba, 0x0b, 0x2e, 0xa2, 0xf7, 0x68, 0x13,
-	0x88, 0x88, 0xc7, 0xcb, 0x20, 0x67, 0x3c, 0x08, 0xb1, 0x05, 0xa6, 0xe0, 0x8e, 0xe1, 0x5a, 0xbe,
-	0x4d, 0x4c, 0xc1, 0x71, 0x04, 0x8d, 0xb8, 0x82, 0x39, 0xa6, 0x6b, 0xf8, 0xf5, 0x61, 0x67, 0x50,
-	0xb8, 0x55, 0xf5, 0x44, 0xc3, 0xbc, 0x2f, 0x03, 0x50, 0xfb, 0x4c, 0xd3, 0x8c, 0x89, 0xc2, 0x9d,
-	0x6f, 0x1d, 0xc3, 0x35, 0xfc, 0x4b, 0x62, 0xf2, 0x2d, 0x2e, 0xa1, 0x59, 0x95, 0xa5, 0x8e, 0xe9,
-	0x5a, 0x7e, 0x7d, 0x78, 0x77, 0x6c, 0x2f, 0xf5, 0xda, 0x28, 0x9d, 0xc6, 0x22, 0xc9, 0x89, 0x6e,
-	0xd0, 0x1f, 0xeb, 0xe7, 0x96, 0x10, 0xb6, 0xc1, 0xda, 0xd2, 0x5c, 0x1e, 0x6c, 0x93, 0xa2, 0xc4,
-	0x6b, 0x38, 0xff, 0x08, 0x58, 0x46, 0x65, 0x20, 0x9b, 0x94, 0xcd, 0xb3, 0xf9, 0x64, 0x78, 0x04,
-	0x1a, 0x55, 0x87, 0x82, 0x14, 0x91, 0x60, 0x54, 0xa9, 0xcb, 0x06, 0x11, 0xce, 0xd6, 0x3c, 0xcc,
-	0x95, 0x5c, 0xd6, 0xe8, 0xc0, 0x05, 0xdf, 0x95, 0x39, 0x2c, 0xb9, 0xc0, 0x7d, 0xeb, 0xdd, 0x43,
-	0x67, 0x41, 0x3f, 0xe7, 0x34, 0x5f, 0x06, 0x51, 0xb2, 0x5f, 0x75, 0x0f, 0x6a, 0x59, 0x4a, 0x93,
-	0x97, 0x89, 0x72, 0x56, 0x9d, 0xe7, 0x43, 0xeb, 0x9f, 0xe4, 0x14, 0x9a, 0x8a, 0x54, 0xfb, 0x3d,
-	0x01, 0xe2, 0x2d, 0xd8, 0xbb, 0x6c, 0xcd, 0xa2, 0xcd, 0x9c, 0x96, 0x57, 0x6e, 0x90, 0xc3, 0x60,
-	0xf8, 0x6d, 0x80, 0xf5, 0xba, 0x9a, 0xe0, 0x14, 0xda, 0x2b, 0x1a, 0x87, 0x5a, 0x7a, 0xe7, 0xe8,
-	0x29, 0xd4, 0xa5, 0xfa, 0x37, 0x27, 0x1e, 0x09, 0xc7, 0x80, 0x33, 0x1a, 0xd3, 0x24, 0x10, 0xf4,
-	0x10, 0x1a, 0x7b, 0x25, 0xfe, 0x7b, 0x0b, 0x7d, 0x94, 0x73, 0x3d, 0xc6, 0x08, 0x60, 0x46, 0xc5,
-	0x5e, 0xd9, 0xad, 0x12, 0x7f, 0xc8, 0xd6, 0x35, 0xf9, 0x7b, 0x3f, 0xfe, 0x04, 0x00, 0x00, 0xff,
-	0xff, 0xf4, 0xa0, 0x14, 0x9f, 0xf1, 0x02, 0x00, 0x00,
+	// 358 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x41, 0x4b, 0xf3, 0x40,
+	0x10, 0x25, 0xc9, 0xf7, 0xd5, 0x76, 0x5a, 0x6d, 0x3b, 0x16, 0x1b, 0x7a, 0x0a, 0x39, 0x48, 0xf4,
+	0xd0, 0x42, 0x45, 0x10, 0xbd, 0x28, 0xb4, 0x16, 0x41, 0x4a, 0xd9, 0xea, 0xcd, 0x4b, 0x6a, 0x56,
+	0x08, 0x09, 0x99, 0x92, 0xdd, 0x2a, 0xf9, 0x67, 0x1e, 0xfd, 0x69, 0x92, 0x4d, 0xaa, 0x59, 0x4a,
+	0xc1, 0xdb, 0xbc, 0xd9, 0xf7, 0xde, 0xcc, 0x9b, 0x04, 0xda, 0xeb, 0x94, 0x24, 0x8d, 0x62, 0x11,
+	0x0c, 0x55, 0x85, 0x56, 0x2c, 0x02, 0xf7, 0x05, 0x8e, 0xe7, 0x24, 0xc3, 0xb7, 0xf0, 0xd5, 0x97,
+	0x21, 0x25, 0x0b, 0x3f, 0x8b, 0xc9, 0x0f, 0xf0, 0x08, 0x4c, 0x49, 0xb6, 0xe1, 0x58, 0x5e, 0x83,
+	0x99, 0x92, 0xf0, 0x12, 0x5a, 0x49, 0x85, 0x66, 0x9b, 0x8e, 0xe1, 0x35, 0xc7, 0xdd, 0x61, 0xee,
+	0x56, 0xd5, 0x33, 0x8d, 0xe6, 0x7e, 0x1a, 0x80, 0xda, 0x33, 0x17, 0x9b, 0x58, 0xe6, 0xee, 0x14,
+	0xd9, 0x86, 0x63, 0x78, 0x75, 0x66, 0x52, 0x84, 0x0b, 0x38, 0xac, 0xca, 0x84, 0x6d, 0x3a, 0x96,
+	0xd7, 0x1c, 0x9f, 0xef, 0xda, 0x2b, 0xbd, 0xd6, 0x12, 0xd3, 0x44, 0xa6, 0x19, 0xd3, 0x0d, 0x06,
+	0xb7, 0xfa, 0xdc, 0x82, 0x84, 0x1d, 0xb0, 0x22, 0x9e, 0xa9, 0xc1, 0x0d, 0x96, 0x97, 0xd8, 0x83,
+	0xff, 0xef, 0x7e, 0xbc, 0xe1, 0x2a, 0x50, 0x83, 0x15, 0xe0, 0xda, 0xbc, 0x32, 0x5c, 0x06, 0xad,
+	0xaa, 0x43, 0xce, 0x94, 0xa1, 0x8c, 0x79, 0xa9, 0x2e, 0x00, 0x22, 0xfc, 0x5b, 0x51, 0x90, 0x95,
+	0x72, 0x55, 0xa3, 0x0d, 0x07, 0xb4, 0x2e, 0x72, 0x58, 0xea, 0x80, 0x5b, 0xe8, 0x9e, 0x41, 0x7b,
+	0xce, 0x3f, 0x9e, 0x28, 0xe2, 0x3f, 0x87, 0x3e, 0x81, 0xda, 0x46, 0xf0, 0xf4, 0x61, 0x52, 0xfa,
+	0x96, 0xc8, 0x3d, 0x85, 0xd6, 0x9f, 0x78, 0x37, 0xd0, 0x54, 0xbc, 0xf2, 0xb2, 0x7b, 0x68, 0x6a,
+	0xfb, 0x9c, 0xb6, 0xcd, 0xa9, 0xc0, 0xf8, 0xcb, 0x00, 0xeb, 0x71, 0x39, 0xc1, 0x29, 0x74, 0x96,
+	0x3c, 0x09, 0xb4, 0xbc, 0xf6, 0xce, 0xf1, 0xcb, 0x55, 0x06, 0xfd, 0x3d, 0x9f, 0x05, 0xef, 0xa0,
+	0x3f, 0xe3, 0x09, 0x4f, 0x7d, 0xc9, 0xb7, 0x31, 0xef, 0x29, 0x7d, 0x16, 0x3c, 0xc5, 0x5e, 0xa1,
+	0xd1, 0xc3, 0x0f, 0x3a, 0xaa, 0x5b, 0xdd, 0x7f, 0x04, 0xf5, 0x19, 0x97, 0xaa, 0x83, 0xdd, 0xdf,
+	0xd7, 0xbd, 0x82, 0x55, 0x4d, 0xfd, 0xcb, 0x17, 0xdf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x9c, 0xa7,
+	0xf4, 0x07, 0xde, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -350,8 +350,10 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type LSDClient interface {
 	SendNotification(ctx context.Context, in *NotificationPayload, opts ...grpc.CallOption) (*NotificationResult, error)
-	GenerateNewKeyPair(ctx context.Context, in *NewKeyPairPayload, opts ...grpc.CallOption) (*KeyPairResult, error)
-	GetKeyPair(ctx context.Context, in *KeyPairPayload, opts ...grpc.CallOption) (*KeyPairResult, error)
+	//    rpc GenerateNewKeyPair(NewKeyPairPayload) returns (KeyPairResult);
+	GenerateNewTokenForUser(ctx context.Context, in *NewTokenPayload, opts ...grpc.CallOption) (*TokenResult, error)
+	//    rpc GetKeyPair(KeyPairPayload) returns (KeyPairResult);
+	GetToken(ctx context.Context, in *TokenPayload, opts ...grpc.CallOption) (*TokenResult, error)
 }
 
 type lSDClient struct {
@@ -371,18 +373,18 @@ func (c *lSDClient) SendNotification(ctx context.Context, in *NotificationPayloa
 	return out, nil
 }
 
-func (c *lSDClient) GenerateNewKeyPair(ctx context.Context, in *NewKeyPairPayload, opts ...grpc.CallOption) (*KeyPairResult, error) {
-	out := new(KeyPairResult)
-	err := c.cc.Invoke(ctx, "/lsd.LSD/GenerateNewKeyPair", in, out, opts...)
+func (c *lSDClient) GenerateNewTokenForUser(ctx context.Context, in *NewTokenPayload, opts ...grpc.CallOption) (*TokenResult, error) {
+	out := new(TokenResult)
+	err := c.cc.Invoke(ctx, "/lsd.LSD/GenerateNewTokenForUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *lSDClient) GetKeyPair(ctx context.Context, in *KeyPairPayload, opts ...grpc.CallOption) (*KeyPairResult, error) {
-	out := new(KeyPairResult)
-	err := c.cc.Invoke(ctx, "/lsd.LSD/GetKeyPair", in, out, opts...)
+func (c *lSDClient) GetToken(ctx context.Context, in *TokenPayload, opts ...grpc.CallOption) (*TokenResult, error) {
+	out := new(TokenResult)
+	err := c.cc.Invoke(ctx, "/lsd.LSD/GetToken", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -392,8 +394,10 @@ func (c *lSDClient) GetKeyPair(ctx context.Context, in *KeyPairPayload, opts ...
 // LSDServer is the server API for LSD service.
 type LSDServer interface {
 	SendNotification(context.Context, *NotificationPayload) (*NotificationResult, error)
-	GenerateNewKeyPair(context.Context, *NewKeyPairPayload) (*KeyPairResult, error)
-	GetKeyPair(context.Context, *KeyPairPayload) (*KeyPairResult, error)
+	//    rpc GenerateNewKeyPair(NewKeyPairPayload) returns (KeyPairResult);
+	GenerateNewTokenForUser(context.Context, *NewTokenPayload) (*TokenResult, error)
+	//    rpc GetKeyPair(KeyPairPayload) returns (KeyPairResult);
+	GetToken(context.Context, *TokenPayload) (*TokenResult, error)
 }
 
 // UnimplementedLSDServer can be embedded to have forward compatible implementations.
@@ -403,11 +407,11 @@ type UnimplementedLSDServer struct {
 func (*UnimplementedLSDServer) SendNotification(ctx context.Context, req *NotificationPayload) (*NotificationResult, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendNotification not implemented")
 }
-func (*UnimplementedLSDServer) GenerateNewKeyPair(ctx context.Context, req *NewKeyPairPayload) (*KeyPairResult, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateNewKeyPair not implemented")
+func (*UnimplementedLSDServer) GenerateNewTokenForUser(ctx context.Context, req *NewTokenPayload) (*TokenResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GenerateNewTokenForUser not implemented")
 }
-func (*UnimplementedLSDServer) GetKeyPair(ctx context.Context, req *KeyPairPayload) (*KeyPairResult, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetKeyPair not implemented")
+func (*UnimplementedLSDServer) GetToken(ctx context.Context, req *TokenPayload) (*TokenResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetToken not implemented")
 }
 
 func RegisterLSDServer(s *grpc.Server, srv LSDServer) {
@@ -432,38 +436,38 @@ func _LSD_SendNotification_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LSD_GenerateNewKeyPair_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NewKeyPairPayload)
+func _LSD_GenerateNewTokenForUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NewTokenPayload)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LSDServer).GenerateNewKeyPair(ctx, in)
+		return srv.(LSDServer).GenerateNewTokenForUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/lsd.LSD/GenerateNewKeyPair",
+		FullMethod: "/lsd.LSD/GenerateNewTokenForUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LSDServer).GenerateNewKeyPair(ctx, req.(*NewKeyPairPayload))
+		return srv.(LSDServer).GenerateNewTokenForUser(ctx, req.(*NewTokenPayload))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LSD_GetKeyPair_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(KeyPairPayload)
+func _LSD_GetToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TokenPayload)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LSDServer).GetKeyPair(ctx, in)
+		return srv.(LSDServer).GetToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/lsd.LSD/GetKeyPair",
+		FullMethod: "/lsd.LSD/GetToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LSDServer).GetKeyPair(ctx, req.(*KeyPairPayload))
+		return srv.(LSDServer).GetToken(ctx, req.(*TokenPayload))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -477,12 +481,12 @@ var _LSD_serviceDesc = grpc.ServiceDesc{
 			Handler:    _LSD_SendNotification_Handler,
 		},
 		{
-			MethodName: "GenerateNewKeyPair",
-			Handler:    _LSD_GenerateNewKeyPair_Handler,
+			MethodName: "GenerateNewTokenForUser",
+			Handler:    _LSD_GenerateNewTokenForUser_Handler,
 		},
 		{
-			MethodName: "GetKeyPair",
-			Handler:    _LSD_GetKeyPair_Handler,
+			MethodName: "GetToken",
+			Handler:    _LSD_GetToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

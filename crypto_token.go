@@ -1,6 +1,8 @@
 package lsd
 
-import "errors"
+import (
+	"errors"
+)
 
 func (lsd *LSD) ifTokenMatchWithUserID(userID, token string) error {
 	savedToken, err := lsd.getToken(userID)

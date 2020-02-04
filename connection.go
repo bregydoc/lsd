@@ -43,15 +43,23 @@ func (lsd *LSD) launchClientWSServer(addr ...string) error {
 		// publicKey := values.Get("publicKey")
 		token := values.Get("token")
 
-		u64, err := base64.StdEncoding.DecodeString(userID)
+		decodedUserID, err := base64.StdEncoding.DecodeString(userID)
 		if err != nil {
 			log.Error(err)
 			return
 		}
 
-		userID = string(u64)
+		decodeToken, err := base64.StdEncoding.DecodeString(token)
+		if err != nil {
+			log.Error(err)
+			return
+		}
+
+		userID = string(decodedUserID)
+		token = string(decodeToken)
 
 		log.Info("userID: ", userID)
+		log.Info("token:  ", token)
 
 		isMono := token == ""
 

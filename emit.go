@@ -1,6 +1,7 @@
 package lsd
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"time"
@@ -28,16 +29,30 @@ func (lsd *LSD) emitNotification(notification *Notification) error {
 	}
 
 	log.Info("before: ", string(payload))
-	privateKey, err := lsd.getPrivateKey(notification.To)
+
+	// privateKey, err := lsd.getPrivateKey(notification.To)
+	// if err != nil {
+	// 	return err
+	// }
+	//
+	// payload, err = lsd.encryptNotification(privateKey, string(payload))
+	// if err != nil {
+	// 	return err
+	// }
+
+	token, err := lsd.getToken(notification.To)
 	if err != nil {
 		return err
 	}
 
-	payload, err = lsd.encryptNotification(privateKey, string(payload))
+	payload, err = lsd.encryptNotification(token, payload)
 	if err != nil {
 		return err
 	}
 
 	log.Info("after: ", string(payload))
-	return s.Write(payload)
+
+	payload64 := base64.StdEncoding.EncodeToString(payload)
+
+	return s.Write([]byte(payload64))
 }

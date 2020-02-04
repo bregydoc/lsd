@@ -22,8 +22,8 @@ func main() {
 	}
 
 	lsd := proto.NewLSDClient(conn)
-	//
-	// res, err := lsd.GenerateNewKeyPair(context.Background(), &proto.NewKeyPairPayload{
+
+	// res, err := lsd.GenerateNewTokenForUser(context.Background(), &proto.NewTokenPayload{
 	// 	UserID: "bregydoc",
 	// })
 	// if err != nil {
@@ -31,7 +31,7 @@ func main() {
 	// }
 	//
 	// log.Info("userID: ", res.UserID)
-	// log.Info("publicKey: ", string(res.PublicKey))
+	// log.Info("token:  ", res.Token)
 	res, err := lsd.SendNotification(context.Background(), &proto.NotificationPayload{
 		To: []string{"bregydoc"},
 		Notification: &proto.Notification{

@@ -128,24 +128,24 @@ func (lsd *LSD) saveToken(userID, token string) error {
 }
 
 func (lsd *LSD) getToken(userID string) (string, error) {
-	var privateKey string
+	var token string
 	if err := lsd.db.View(func(tx *bolt.Tx) error {
 		// defer tx.Rollback()
-		b := tx.Bucket([]byte(keypairsBucket))
-		privateKey = string(b.Get([]byte(userID)))
+		b := tx.Bucket([]byte(tokensBucket))
+		token = string(b.Get([]byte(userID)))
 		// return tx.Commit()
 		return nil
 	}); err != nil {
 		return "", err
 	}
 
-	return privateKey, nil
+	return token, nil
 }
 
 func (lsd *LSD) clearToken(userID string) error {
 	return lsd.db.Update(func(tx *bolt.Tx) error {
 		// defer tx.Rollback()
-		b := tx.Bucket([]byte(keypairsBucket))
+		b := tx.Bucket([]byte(tokensBucket))
 		if err := b.Delete([]byte(userID)); err != nil {
 			return err
 		}
